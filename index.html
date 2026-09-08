@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dominick M. Alexandre</title>
+<meta name="description" content="Portfólio acadêmico de Dominick M. Alexandre, pesquisadora em linguística computacional.">
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     TOKENS
+     Espelham as variáveis reais do al-folio
+     (_sass/_themes.scss): branco/preto no claro,
+     cinza-escuro/cinza-claro no escuro, com um
+     azul como --global-theme-color.
+     A ÚNICA fonte fora da stack padrão do tema é
+     a mono, usada só no rótulo minúsculo das
+     POS-tags — o resto é tipografia de sistema,
+     igual ao tema original.
+     ============================================ */
+  :root{
+    color-scheme: light;
+    --bg: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --text: #000000;
+    --text-light: #828282;
+    --theme-color: #0076DF;
+    --divider: rgba(0,0,0,0.1);
+    --footer-bg: #1C1C1D;
+    --footer-text: #DADADA;
+
+    /* cores-tag — únicas cores fora da paleta do tema,
+       usadas só nas caixas de anotação morfossintática */
+    --noun: #FF6B47;      --noun-tint: #FFE4DA;
+    --verb: #7C5CFC;      --verb-tint: #E9E3FF;
+    --adj:  #00A896;      --adj-tint:  #D6F5F0;
+    --adp:  #4F86C6;      --adp-tint:  #DCEAFA;
+    --propn:#E0447A;      --propn-tint:#FFDCEA;
+    --adv:  #E0A200;      --adv-tint: #FFF1C2;
+    --cconj:#6E6E76;      --cconj-tint:#E7E7EA;
+
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    --mono: "IBM Plex Mono", "SF Mono", Consolas, monospace;
+
+    --gutter: clamp(20px, 6vw, 64px);
+  }
+
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg: #1C1C1D;
+    --card-bg: #212529;
+    --text: #DADADA;
+    --text-light: #828282;
+    --theme-color: #5AA9FF;
+    --divider: #424246;
+    --footer-bg: #DADADA;
+    --footer-text: #1C1C1D;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg: #1C1C1D;
+      --card-bg: #212529;
+      --text: #DADADA;
+      --text-light: #828282;
+      --theme-color: #5AA9FF;
+      --divider: #424246;
+      --footer-bg: #DADADA;
+      --footer-text: #1C1C1D;
+    }
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  ::selection{ background: var(--theme-color); color: #fff; }
+  a{ color: inherit; }
+  img, svg{ max-width: 100%; }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--theme-color);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ============================================
+     LAYOUT
+     ============================================ */
+  .wrap{ max-width: 900px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  section{ padding: 56px 0; }
+  section:last-of-type{ border-bottom: none; }
+
+  /* news / latest posts / publications ficam corridas, sem "card"
+     nem divisória — igual ao fluxo real do al-folio (h2 + tabela) */
+  section.compact-section{ padding: 0; border-bottom: none; }
+  section.compact-section + section.compact-section{ margin-top: 8px; }
+
+  h2.section-title{
+    font-size: 22px; font-weight: 700; margin: 40px 0 12px; letter-spacing: -0.01em;
+  }
+  section.compact-section:first-of-type h2.section-title{ margin-top: 0; }
+
+  /* tabela de news / latest posts — igual à markup real do tema:
+     table-sm (padding 0.3rem) + table-borderless (sem linhas),
+     coluna de data com 20% de largura */
+  .al-table{ width: 100%; border-collapse: collapse; }
+  .al-table th, .al-table td{ padding: 5px 8px; text-align: left; vertical-align: top; }
+  .al-table th{
+    width: 20%; white-space: nowrap;
+    font-weight: 400; font-size: 14.5px; color: var(--text);
+  }
+  .al-table td{ font-size: 14.5px; color: var(--text); }
+  .al-table td a{ color: var(--text); text-decoration: none; }
+  .al-table td a:hover{ color: var(--theme-color); }
+
+  .pub-year{ font-size: 14px; font-weight: 700; color: var(--text-light); margin: 20px 0 4px; }
+  .pub-year:first-child{ margin-top: 0; }
+
+  /* ============================================
+     NAV
+     ============================================ */
+  header.site-nav{
+    position: sticky; top: 0; z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--divider);
+  }
+  .nav-inner{
+    max-width: 900px; margin: 0 auto; padding: 14px var(--gutter);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-links{ display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a{
+    font-size: 14px; text-decoration: none; color: var(--text);
+    padding-bottom: 3px; border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color: var(--theme-color); border-color: var(--theme-color); }
+  @media (max-width: 900px){ .nav-links{ gap: 14px; } .nav-links li.hide-narrow{ display: none; } }
+
+  /* dropdown "submenus" */
+  .nav-item.dropdown{ position: relative; }
+  .dropdown-toggle{ background: none; border: none; cursor: pointer; font-family: var(--sans); }
+  .dropdown-toggle::after{
+    content: ""; display: inline-block; margin-left: 5px;
+    border: 4px solid transparent; border-top-color: currentColor; vertical-align: middle;
+  }
+  .dropdown-menu{
+    position: absolute; top: 100%; right: 0; margin-top: 10px;
+    background: var(--bg); border: 1px solid var(--divider); border-radius: 6px;
+    padding: 6px 0; min-width: 150px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    display: none; z-index: 30;
+  }
+  .dropdown-menu.show{ display: block; }
+  .dropdown-item{
+    display: block; padding: 7px 16px; font-size: 14px;
+    color: var(--text); text-decoration: none;
+  }
+  .dropdown-item:hover{ color: var(--theme-color); background: var(--divider); }
+  .dropdown-divider{ height: 1px; background: var(--divider); margin: 5px 0; }
+
+  /* "ctrl k" search — decorativo: este arquivo estático não roda
+     busca de verdade (isso vem de um plugin do Jekyll), mas o
+     visual e o atalho de teclado ficam prontos pra você plugar
+     uma busca real depois, se quiser. */
+  .search-toggle{
+    display: flex; align-items: center; gap: 6px;
+    background: none; border: none; cursor: pointer;
+    font-size: 14px; color: var(--text); font-family: var(--sans);
+    padding: 0;
+  }
+  .search-toggle svg{ width: 14px; height: 14px; }
+  .search-toggle:hover{ color: var(--theme-color); }
+
+  .theme-toggle{
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border: none; background: none; cursor: pointer;
+    color: var(--text); border-radius: 50%;
+    transition: background 0.15s ease;
+  }
+  .theme-toggle:hover{ background: var(--divider); }
+  .theme-toggle svg{ width: 17px; height: 17px; }
+  .theme-toggle .icon-moon{ display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun{ display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon{ display: block; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun{ display: none; }
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon{ display: block; }
+  }
+
+  /* ============================================
+     HERO / ABOUT
+     ============================================ */
+  .hero{ padding: 56px 0 24px; }
+
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 720px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero-grid > div:last-child{ order: -1; width: 150px; }
+  }
+
+  .hero-name{
+    font-size: 32px; line-height: 1.2; font-weight: 400; margin: 0 0 10px;
+  }
+  .hero-name strong{ font-weight: 700; }
+
+  .hero-affil{ font-size: 15px; color: var(--text-light); margin: 0 0 26px; }
+  .hero-affil a{ color: var(--theme-color); text-decoration: none; }
+  .hero-affil a:hover{ text-decoration: underline; }
+
+  .hero-bio p{ font-size: 15.5px; color: var(--text); margin: 0 0 16px; }
+  .hero-bio p.tagged-line{ line-height: 2.5; }
+  .hero-bio a{ color: var(--theme-color); text-decoration: none; }
+  .hero-bio a:hover{ text-decoration: underline; }
+
+  /* anotação morfossintática — caixa colorida por categoria gramatical,
+     com o rótulo da tag embaixo. único elemento fora da paleta do tema. */
+  .tagged{
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1px 9px 3px;
+    border-radius: 7px;
+    color: #2A2822;
+    font-weight: 400;
+    margin: 0 2px;
+    line-height: 1.3;
+  }
+  .tagged .tag-label{
+    position: absolute;
+    bottom: -17px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 1px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .tagged--noun{ background: var(--noun-tint); }
+  .tagged--noun .tag-label{ background: var(--noun); color: #fff; }
+  .tagged--verb{ background: var(--verb-tint); }
+  .tagged--verb .tag-label{ background: var(--verb); color: #fff; }
+  .tagged--adj{ background: var(--adj-tint); }
+  .tagged--adj .tag-label{ background: var(--adj); color: #fff; }
+  .tagged--adp{ background: var(--adp-tint); }
+  .tagged--adp .tag-label{ background: var(--adp); color: #fff; }
+  .tagged--propn{ background: var(--propn-tint); }
+  .tagged--propn .tag-label{ background: var(--propn); color: #fff; }
+  .tagged--adv{ background: var(--adv-tint); }
+  .tagged--adv .tag-label{ background: var(--adv); color: #3D2E00; }
+  .tagged--cconj{ background: var(--cconj-tint); }
+  .tagged--cconj .tag-label{ background: var(--cconj); color: #fff; }
+
+  /* .tagged-hover adiciona um tooltip extra por cima da caixa —
+     usada só na palavra com traços morfológicos completos */
+  .tagged-hover{ cursor: help; }
+  .tagged-hover::after{
+    content: attr(data-tag);
+    position: absolute;
+    left: 50%; bottom: calc(100% + 8px);
+    transform: translateX(-50%) translateY(4px);
+    background: #000;
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 5;
+  }
+  .tagged-hover::before{
+    content: "";
+    position: absolute;
+    left: 50%; bottom: calc(100% + 2px);
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #000;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 5;
+  }
+  .tagged-hover:hover::after{ opacity: 1; transform: translateX(-50%) translateY(0); }
+  .tagged-hover:hover::before{ opacity: 1; }
+
+  .hero-photo{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--text-light);
+    text-align: center; padding: 16px;
+  }
+
+  /* ícones sociais — monocromáticos, herdam a cor do texto
+     (preto no modo claro, cinza-claro no escuro) */
+  .hero-social{
+    margin-top: 14px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  }
+  .hero-social a{
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px;
+    color: var(--text);
+    opacity: 0.75;
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+  .hero-social a:hover{ opacity: 1; color: var(--theme-color); }
+  .hero-social svg{ width: 19px; height: 19px; fill: currentColor; }
+
+  /* ============================================
+     LISTAS (publications / news / posts)
+     ============================================ */
+  .row-list{ display: flex; flex-direction: column; }
+  .row-item{
+    display: grid; grid-template-columns: 130px 1fr; gap: 20px;
+    padding: 6px 0;
+  }
+  @media (max-width: 560px){ .row-item{ grid-template-columns: 1fr; gap: 4px; } }
+  .row-date{ font-size: 13px; color: var(--text-light); padding-top: 2px; }
+  .row-main .row-title{ font-size: 15.5px; font-weight: 600; margin: 0 0 4px; }
+  .row-main .row-title a{ color: var(--text); text-decoration: none; }
+  .row-main .row-title a:hover{ color: var(--theme-color); }
+  .row-main .row-meta{ font-size: 13.5px; color: var(--text-light); margin: 0 0 8px; font-style: italic; }
+  .row-main .row-links{ display: flex; gap: 12px; margin-top: 6px; }
+  .row-main .row-links a{ font-size: 12.5px; color: var(--theme-color); text-decoration: none; }
+  .row-main .row-links a:hover{ text-decoration: underline; }
+  .pub-year{ font-size: 14px; font-weight: 700; color: var(--text-light); margin: 28px 0 4px; }
+  .pub-year:first-child{ margin-top: 0; }
+
+  /* ============================================
+     FOOTER — cor sempre invertida em relação
+     ao fundo da página, igual ao tema original
+     ============================================ */
+  footer{
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 28px var(--gutter);
+    text-align: center;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <ul class="nav-links">
+      <li><a href="#top" class="active">about</a></li>
+      <li class="hide-narrow"><a href="#">blog</a></li>
+      <li><a href="#publicacoes">publications</a></li>
+      <li class="hide-narrow"><a href="#">projects</a></li>
+      <li class="hide-narrow"><a href="#">repositories</a></li>
+      <li><a href="#">CV</a></li>
+      <li class="nav-item dropdown">
+        <button class="dropdown-toggle" id="submenusToggle" type="button" aria-haspopup="true" aria-expanded="false">submenus</button>
+        <div class="dropdown-menu" id="submenusMenu">
+          <a class="dropdown-item" href="#">bookshelf</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">blog</a>
+        </div>
+      </li>
+      <li>
+        <button class="search-toggle" id="searchToggle" type="button" title="Busca (não funcional nesta página estática)" aria-label="Abrir busca">
+          ctrl k
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+      </li>
+    </ul>
+    <!-- blog, projects, repositories, cv, teaching e people ainda não têm
+         página correspondente nesta versão de página única — hrefs="#"
+         como placeholder até você criar essas páginas de verdade.
+         "ctrl k" é só visual: a busca de verdade do al-folio vem de um
+         plugin do Jekyll que essa página HTML solta não roda. -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar modo claro/escuro" type="button">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8l1.8-1.8M18 6l1.8-1.8"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5a8.5 8.5 0 1 0 11.2 11.2Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================================
+       ABOUT
+       .tagged-hover marca uma palavra com data-tag;
+       o texto do atributo aparece num tooltip no hover.
+       ============================================ -->
+  <section id="sobre" class="hero wrap">
+    <div class="hero-grid">
+      <div class="hero-main">
+        <h1 class="hero-name"><strong>Dominick</strong> M. Alexandre</h1>
+
+        <p class="hero-affil">
+          <a href="http://dgp.cnpq.br/dgp/espelhogrupo/2542059310124116" target="_blank" rel="noopener">CompLin</a>
+          · <a href="https://www.ufc.br/pt" target="_blank" rel="noopener">Universidade Federal do Ceará</a>
+        </p>
+
+        <div class="hero-bio">
+          <p class="tagged-line">
+            <span class="tagged tagged--noun tagged-hover" data-tag="Gender=Fem|Number=Sing">Pesquisadora<span class="tag-label">NOUN</span></span>
+            em <span class="tagged tagged--noun">Linguística<span class="tag-label">NOUN</span></span> <span class="tagged tagged--adj tagged-hover" data-tag="Gender=Fem|Number=Sing">Computacional<span class="tag-label">ADJ</span></span>,
+            <span class="tagged tagged--verb tagged-hover" data-tag="VerbForm">trabalhando<span class="tag-label">VERB</span></span>
+            no processamento automático de línguas <span class="tagged tagged--adj tagged-hover" data-tag="Gender=Fem|Number=Plur">indígenas<span class="tag-label">ADJ</span></span> brasileiras. Doutoranda em <span class="tagged tagged--noun">Linguística<span class="tag-label">NOUN</span></span> (PPGLin/UFC), <span class="tagged tagged--adp">sob<span class="tag-label">ADP</span></span> orientação do Prof. <span class="tagged tagged--propn">Leonel<span class="tag-label">PROPN</span></span> F. de Alencar <a href="https://leoalenc.github.io/" target="_blank" rel="noopener">↗</a>, com pesquisa <span class="tagged tagged--verb tagged-hover" data-tag="Gender=Fem|Number=Sing|VerbForm=Part">voltada<span class="tag-label">VERB</span></span> à modelagem computacional do <span class="tagged tagged--propn">nheengatu<span class="tag-label">PROPN</span></span>.
+          </p>
+          <p class="tagged-line">
+            <span class="tagged tagged--adv">Profissionalmente<span class="tag-label">ADV</span></span>,
+            <span class="tagged tagged--verb tagged-hover" data-tag="Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin">atuo<span class="tag-label">VERB</span></span>
+            com anotação <span class="tagged tagged--cconj">e<span class="tag-label">CCONJ</span></span> análise de dados <span class="tagged tagged--adj tagged-hover" data-tag="Gender=Masc|Number=Plur">linguísticos<span class="tag-label">ADJ</span></span>, desenvolvimento de <span class="tagged tagged--noun tagged-hover" data-tag="Number=Plur">corpora<span class="tag-label">NOUN</span></span> e criação de <span class="tagged tagged--noun tagged-hover" data-tag="Number=Plur">datasets<span class="tag-label">NOUN</span></span> <span class="tagged tagged--adp">para<span class="tag-label">ADP</span></span> treinamento e avaliação de modelos <span class="tagged tagged--adp">de<span class="tag-label">ADP</span></span> língua.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="hero-photo">
+          [foto aqui]
+        </div>
+        <div class="hero-social">
+          <a href="mailto:seu.email@instituicao.edu" aria-label="E-mail" title="E-mail">
+            <svg viewBox="0 0 24 24"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.2.5 7.4 5.6a.7.7 0 0 0 .8 0L19.8 6H4.2ZM20 8.1l-6.9 5.2a2.7 2.7 0 0 1-3.2 0L4 8.1V18h16V8.1Z"/></svg>
+          </a>
+          <a href="https://github.com/dominickmaia" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M12 1.5a10.5 10.5 0 0 0-3.32 20.47c.53.1.72-.23.72-.51v-1.8c-2.92.63-3.54-1.4-3.54-1.4-.48-1.22-1.17-1.54-1.17-1.54-.96-.65.07-.64.07-.64 1.06.07 1.62 1.09 1.62 1.09.94 1.62 2.47 1.15 3.07.88.1-.68.37-1.15.67-1.42-2.33-.27-4.79-1.17-4.79-5.2 0-1.15.41-2.09 1.08-2.82-.11-.27-.47-1.35.1-2.81 0 0 .88-.28 2.88 1.08a10 10 0 0 1 5.24 0c2-1.36 2.88-1.08 2.88-1.08.57 1.46.21 2.54.1 2.81.67.73 1.08 1.67 1.08 2.82 0 4.04-2.46 4.92-4.8 5.19.38.33.72.97.72 1.96v2.9c0 .28.19.62.73.51A10.5 10.5 0 0 0 12 1.5Z"/></svg>
+          </a>
+          <a href="https://scholar.google.com/citations?user=SEU_ID" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar">
+            <svg viewBox="0 0 24 24"><path d="M12 2 1 9l4 2.5V18l7 4 7-4v-6.5L21 10v6h1V9Zm0 2.3L18.8 9 12 13.2 5.2 9Zm-5 8.1v-4.5l5 3.1 5-3.1v4.5l-5 2.9Z"/></svg>
+          </a>
+          <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener" aria-label="ORCID" title="ORCID">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-3.3 5.2c.6 0 1 .45 1 1s-.4 1-1 1-1-.45-1-1 .4-1 1-1ZM7.9 10h1.6v8H7.9v-8Zm4 0h3.4c3.2 0 4.6 2.3 4.6 4s-1.4 4-4.6 4h-3.4v-8Zm1.6 1.4v5.2h1.7c2.3 0 3.1-1.7 3.1-2.6s-.8-2.6-3.1-2.6h-1.7Z"/></svg>
+          </a>
+          <a href="http://lattes.cnpq.br/0000000000000000" target="_blank" rel="noopener" aria-label="Currículo Lattes" title="Lattes">
+            <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm8.5 1.5V8H19l-4.5-4.5ZM8 12h8v1.4H8V12Zm0 3h8v1.4H8V15Zm0-6h4v1.4H8V9Z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/dominickmaia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.5 4.78 5.9V21H18.4v-5.4c0-1.3-.02-3-1.9-3-1.9 0-2.2 1.4-2.2 2.9V21H10V9Z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       NEWS
+       ============================================ -->
+  <section id="news" class="wrap compact-section">
+    <h2 class="section-title">news</h2>
+    <table class="al-table">
+      <tbody>
+        <tr>
+          <th scope="row">11–13 ago. 2026</th>
+          <td>Participação na 1ª Escola de Processamento de Linguagem Natural (EPLN), com auxílio da NAACL.</td>
+        </tr>
+        <tr>
+          <th scope="row">13 abr. 2026</th>
+          <td>Apresentação de trabalho no Third Student Research Workshop (SRW) – PROPOR 2026.</td>
+        </tr>
+        <tr>
+          <th scope="row">2 mar. 2026</th>
+          <td>Início do Doutorado em Linguística (PPGLin/UFC).</td>
+        </tr>
+        <tr>
+          <th scope="row">21 jan. 2026</th>
+          <td>Defesa da Dissertação de Mestrado em Linguística (PPGLin/UFC).</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================
+       LATEST POSTS
+       ============================================ -->
+  <section id="posts" class="wrap compact-section">
+    <h2 class="section-title">latest posts</h2>
+    <table class="al-table">
+      <tbody>
+        <tr>
+          <th scope="row">[10 fev 2026]</th>
+          <td><a href="#">[Título do post — ex: notas sobre anotação morfossintática do nheengatu]</a></td>
+        </tr>
+        <tr>
+          <th scope="row">[03 dez 2025]</th>
+          <td><a href="#">[Título de outro post]</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================
+       SELECTED PUBLICATIONS
+       ============================================ -->
+  <section id="publicacoes" class="wrap compact-section">
+    <h2 class="section-title">selected publications</h2>
+
+    <p class="pub-year">2026</p>
+    <div class="row-list">
+      <div class="row-item">
+        <span class="row-date">[sobrenome2026a]</span>
+        <div class="row-main">
+          <p class="row-title">[Título completo do artigo ou trabalho]</p>
+          <p class="row-meta">[Coautores]. In: [Nome do evento/periódico], [local/volume].</p>
+          <div class="row-links">
+            <a href="#" target="_blank" rel="noopener">pdf</a>
+            <a href="#" target="_blank" rel="noopener">bibtex</a>
+            <a href="#" target="_blank" rel="noopener">código</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="pub-year">2025</p>
+    <div class="row-list">
+      <div class="row-item">
+        <span class="row-date">[sobrenome2025a]</span>
+        <div class="row-main">
+          <p class="row-title">[Título completo do artigo ou trabalho]</p>
+          <p class="row-meta">[Coautores]. In: [Nome do evento/periódico], [local/volume].</p>
+          <div class="row-links">
+            <a href="#" target="_blank" rel="noopener">pdf</a>
+            <a href="#" target="_blank" rel="noopener">bibtex</a>
+          </div>
+        </div>
+      </div>
+      <div class="row-item">
+        <span class="row-date">[sobrenome2025b]</span>
+        <div class="row-main">
+          <p class="row-title">[Título de outro trabalho — resumo, pôster, workshop]</p>
+          <p class="row-meta">[Coautores]. In: [Evento], [local].</p>
+          <div class="row-links">
+            <a href="#" target="_blank" rel="noopener">pdf</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Duplique um bloco pub-year + row-list para cada ano adicional -->
+  </section>
+
+</main>
+
+<footer>
+  Dominick M. Alexandre © 2026 · construído com HTML puro, hospedado no GitHub Pages
+</footer>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('themeToggle');
+    var root = document.documentElement;
+    var stored = localStorage.getItem('theme');
+    if (stored) root.setAttribute('data-theme', stored);
+
+    toggle.addEventListener('click', function(){
+      var current = root.getAttribute('data-theme');
+      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var effectiveIsDark = current ? current === 'dark' : systemDark;
+      var next = effectiveIsDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // dropdown "submenus"
+    var ddToggle = document.getElementById('submenusToggle');
+    var ddMenu = document.getElementById('submenusMenu');
+    ddToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isOpen = ddMenu.classList.toggle('show');
+      ddToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    document.addEventListener('click', function(){
+      ddMenu.classList.remove('show');
+      ddToggle.setAttribute('aria-expanded', 'false');
+    });
+  })();
+</script>
+
+</body>
+</html>
