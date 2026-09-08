@@ -26,7 +26,7 @@ latest_posts:
 
 <style>
   .tag-word{ padding: 1px 6px; border-radius: 5px; color: #2A2822; }
-  .tag-badge{ font-size: 9px; font-weight: 600; padding: 1px 4px; border-radius: 3px; margin-left: 2px; }
+  .tag-badge{ position: static; display: inline; vertical-align: text-top; font-size: 9px; font-weight: 600; padding: 1px 4px; border-radius: 3px; margin-left: 2px; }
 
   .tw-noun{ background: #FFE4DA; } .tb-noun{ background: #FF6B47; color: #fff; }
   .tw-verb{ background: #E9E3FF; } .tb-verb{ background: #7C5CFC; color: #fff; }
@@ -62,14 +62,14 @@ latest_posts:
 </style>
 
 <p>
-  <span class="tagged-hover" data-tag="Gender=Fem|Number=Sing"><span class="tag-word tw-noun">Pesquisadora</span><sup class="tag-badge tb-noun">NOUN</sup></span>
-  em <span class="tag-word tw-noun">Linguística</span><sup class="tag-badge tb-noun">NOUN</sup> <span class="tagged-hover" data-tag="Gender=Fem|Number=Sing"><span class="tag-word tw-adj">Computacional</span><sup class="tag-badge tb-adj">ADJ</sup></span>,
-  <span class="tagged-hover" data-tag="VerbForm"><span class="tag-word tw-verb">trabalhando</span><sup class="tag-badge tb-verb">VERB</sup></span>
-  no processamento automático de línguas <span class="tagged-hover" data-tag="Gender=Fem|Number=Plur"><span class="tag-word tw-adj">indígenas</span><sup class="tag-badge tb-adj">ADJ</sup></span> brasileiras. Doutoranda em <span class="tag-word tw-noun">Linguística</span><sup class="tag-badge tb-noun">NOUN</sup> (PPGLin/UFC), <span class="tag-word tw-adp">sob</span><sup class="tag-badge tb-adp">ADP</sup> orientação do Prof. <span class="tag-word tw-propn">Leonel</span><sup class="tag-badge tb-propn">PROPN</sup> F. de Alencar [↗](https://leoalenc.github.io/){:target="_blank"}, com pesquisa <span class="tagged-hover" data-tag="Gender=Fem|Number=Sing|VerbForm=Part"><span class="tag-word tw-verb">voltada</span><sup class="tag-badge tb-verb">VERB</sup></span> à modelagem computacional do <span class="tag-word tw-propn">nheengatu</span><sup class="tag-badge tb-propn">PROPN</sup>.
+  <span class="tagged-hover" data-tag="Gender=Fem|Number=Sing"><span class="tag-word tw-noun">Pesquisadora</span><span class="tag-badge tb-noun">NOUN</span></span>
+  em <span class="tag-word tw-noun">Linguística</span><span class="tag-badge tb-noun">NOUN</span> <span class="tagged-hover" data-tag="Gender=Fem|Number=Sing"><span class="tag-word tw-adj">Computacional</span><span class="tag-badge tb-adj">ADJ</span></span>,
+  <span class="tagged-hover" data-tag="VerbForm"><span class="tag-word tw-verb">trabalhando</span><span class="tag-badge tb-verb">VERB</span></span>
+  no processamento automático de línguas <span class="tagged-hover" data-tag="Gender=Fem|Number=Plur"><span class="tag-word tw-adj">indígenas</span><span class="tag-badge tb-adj">ADJ</span></span> brasileiras. Doutoranda em <span class="tag-word tw-noun">Linguística</span><span class="tag-badge tb-noun">NOUN</span> (PPGLin/UFC), <span class="tag-word tw-adp">sob</span><span class="tag-badge tb-adp">ADP</span> orientação do Prof. <span class="tag-word tw-propn">Leonel</span><span class="tag-badge tb-propn">PROPN</span> F. de Alencar <a href="https://leoalenc.github.io/" target="_blank">↗</a>, com pesquisa <span class="tagged-hover" data-tag="Gender=Fem|Number=Sing|VerbForm=Part"><span class="tag-word tw-verb">voltada</span><span class="tag-badge tb-verb">VERB</span></span> à modelagem computacional do <span class="tag-word tw-propn">nheengatu</span><span class="tag-badge tb-propn">PROPN</span>.
 </p>
 
 <p>
-  <span class="tag-word tw-adv">Profissionalmente</span><sup class="tag-badge tb-adv">ADV</sup>,
-  <span class="tagged-hover" data-tag="Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin"><span class="tag-word tw-verb">atuo</span><sup class="tag-badge tb-verb">VERB</sup></span>
-  com anotação <span class="tag-word tw-cconj">e</span><sup class="tag-badge tb-cconj">CCONJ</sup> análise de dados <span class="tagged-hover" data-tag="Gender=Masc|Number=Plur"><span class="tag-word tw-adj">linguísticos</span><sup class="tag-badge tb-adj">ADJ</sup></span>, desenvolvimento de <span class="tagged-hover" data-tag="Number=Plur"><span class="tag-word tw-noun">corpora</span><sup class="tag-badge tb-noun">NOUN</sup></span> e criação de <span class="tagged-hover" data-tag="Number=Plur"><span class="tag-word tw-noun">datasets</span><sup class="tag-badge tb-noun">NOUN</sup></span> <span class="tag-word tw-adp">para</span><sup class="tag-badge tb-adp">ADP</sup> treinamento e avaliação de modelos <span class="tag-word tw-adp">de</span><sup class="tag-badge tb-adp">ADP</sup> língua.
+  <span class="tag-word tw-adv">Profissionalmente</span><span class="tag-badge tb-adv">ADV</span>,
+  <span class="tagged-hover" data-tag="Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin"><span class="tag-word tw-verb">atuo</span><span class="tag-badge tb-verb">VERB</span></span>
+  com anotação <span class="tag-word tw-cconj">e</span><span class="tag-badge tb-cconj">CCONJ</span> análise de dados <span class="tagged-hover" data-tag="Gender=Masc|Number=Plur"><span class="tag-word tw-adj">linguísticos</span><span class="tag-badge tb-adj">ADJ</span></span>, desenvolvimento de <span class="tagged-hover" data-tag="Number=Plur"><span class="tag-word tw-noun">corpora</span><span class="tag-badge tb-noun">NOUN</span></span> e criação de <span class="tagged-hover" data-tag="Number=Plur"><span class="tag-word tw-noun">datasets</span><span class="tag-badge tb-noun">NOUN</span></span> <span class="tag-word tw-adp">para</span><span class="tag-badge tb-adp">ADP</span> treinamento e avaliação de modelos <span class="tag-word tw-adp">de</span><span class="tag-badge tb-adp">ADP</span> língua.
 </p>
