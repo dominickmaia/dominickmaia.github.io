@@ -24,6 +24,19 @@ latest_posts:
   limit: 3
 ---
 
+<script>
+  // Se o visitante ainda não escolheu um tema manualmente (não há nada
+  // salvo no localStorage), força o modo claro como padrão em vez de
+  // seguir a preferência do sistema operacional. Depois que a pessoa
+  // clicar no botão de sol/lua, a escolha dela passa a valer normalmente.
+  (function () {
+    if (!localStorage.getItem("theme")) {
+      localStorage.setItem("theme", "light");
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  })();
+</script>
+
 <style>
   .tag-word{ padding: 1px 6px; border-radius: 5px; color: #2A2822; }
   .tag-badge{ position: static; display: inline; vertical-align: text-top; font-size: 9px; font-weight: 600; padding: 1px 4px; border-radius: 3px; margin-left: 2px; }
